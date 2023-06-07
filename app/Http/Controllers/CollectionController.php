@@ -9,6 +9,15 @@ class CollectionController extends Controller
     {
         $collections = \App\Models\Collection::take(env("DEFAULT_LIST_TAKE"))
             ->get()->toArray();
+
+        foreach ($collections as &$collection) {
+            if ($collection['icon'] != ''){
+                $collection['icon'] = env("NFT_STORAGE_URL") . $collection['icon'];
+            } else {
+                $collection['icon'] = "default URl.";//TODO
+            }
+        }
+
         return response()->json($collections);
     }
 
